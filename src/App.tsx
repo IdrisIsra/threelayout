@@ -1,26 +1,42 @@
 import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {
-  useIntersect,
-  Image,
-  ScrollControls,
-  Scroll,
-  Html,
-} from "@react-three/drei";
+import { useIntersect, Image, ScrollControls, Scroll } from "@react-three/drei";
 
-function Item({
-  url,
-  scale,
-  ...props
-}: {
-  url: string;
-  scale: any;
-  position: any;
-}) {
+function Item({ url, scale, ...props }: { url: string; scale: any }) {
+  const visible = useRef(false);
+  const [hovered, hover] = useState(false);
+  const ref = useIntersect((isVisible) => (visible.current = isVisible));
+  const { height } = useThree((state) => state.viewport);
+  useFrame((state, delta) => {
+    ref.current.position.y = THREE.MathUtils.damp(
+      ref.current.position.y,
+      visible.current ? 0 : -height / 2 + 1,
+      4,
+      delta
+    );
+    ref.current.material.zoom = THREE.MathUtils.damp(
+      ref.current.material.zoom,
+      visible.current ? 1 : 1.5,
+      4,
+      delta
+    );
+    ref.current.material.grayscale = THREE.MathUtils.damp(
+      ref.current.material.grayscale,
+      hovered ? 0 : 1,
+      4,
+      delta
+    );
+  });
   return (
     <group {...props}>
-      <Image scale={scale} url={url} />
+      <Image
+        ref={ref}
+        onPointerOver={() => hover(true)}
+        onPointerOut={() => hover(false)}
+        scale={scale}
+        url={url}
+      />
     </group>
   );
 }
