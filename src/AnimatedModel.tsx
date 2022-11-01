@@ -50,24 +50,18 @@ type TScrollModel = {
 export function AnimatedModel(props: any) {
   const data = useScroll();
 
-  const groupRef = useRef<THREE.Group>(null);
+  // const groupRef = useRef<THREE.Group>();
   const { nodes, materials, scene, animations } = useGLTF(
     "/animatedAvatarNew.glb"
   ) as unknown as GLTFResult;
-  const { names, actions } = useAnimations(animations, groupRef);
 
-  const mixer = new THREE.AnimationMixer(scene);
-  const clips = animations;
-  mixer.clipAction(clips[0]).play();
-
-  useFrame((t, dt) => {
-    console.log(data);
-    groupRef.current?.rotateY(data.offset);
-    mixer.setTime(data.offset);
+  const { ref, mixer, names, actions, clips } = useAnimations(animations);
+  useEffect(() => {
+    actions?.["Armature|mixamo.com|Layer0"]!.play();
   });
 
   return (
-    <group ref={groupRef} {...props} dispose={null}>
+    <group ref={ref} {...props} dispose={null}>
       <group name="Scene">
         <group name="Armature">
           <primitive object={nodes.Hips} />

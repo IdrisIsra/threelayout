@@ -4,7 +4,15 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useIntersect, Image, ScrollControls, Scroll } from "@react-three/drei";
 import { AnimatedModel } from "./AnimatedModel";
 
-function Item({ url, scale, ...props }: { url: string; scale: any }) {
+function Item({
+  url,
+  scale,
+  ...props
+}: {
+  url: string;
+  scale: any;
+  position: any;
+}) {
   const visible = useRef(false);
   const [hovered, hover] = useState(false);
   const ref = useIntersect((isVisible) => (visible.current = isVisible));
@@ -114,6 +122,7 @@ function App() {
               right: "20vw",
               fontSize: "25em",
               transform: `translate3d(0,-100%,0)`,
+              color: "red",
             }}
           >
             all
