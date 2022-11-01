@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useIntersect, Image, ScrollControls, Scroll } from "@react-three/drei";
+import { AnimatedModel } from "./AnimatedModel";
 
 function Item({ url, scale, ...props }: { url: string; scale: any }) {
   const visible = useRef(false);
@@ -45,6 +46,10 @@ function Items() {
   const { width: w, height: h } = useThree((state: any) => state.viewport);
   return (
     <Scroll>
+      <AnimatedModel
+        scale={[w / 5, w / 5, w / 5]}
+        position={[w / 4, -h * 0.9, 0]}
+      />
       <Item
         url="/vite.svg"
         scale={[w / 3, w / 3, 1]}
