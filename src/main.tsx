@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { Suspense } from "react";
 import "./styles.css";
 import App from "./App";
+import { Loader } from "@react-three/drei";
 
 function Overlay() {
   return (
@@ -36,5 +37,6 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <App />
     </Suspense>
     <Overlay />
+    <Loader />
   </>
 );

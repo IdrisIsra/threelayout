@@ -58,46 +58,42 @@ function Items() {
         scale={[w / 5, w / 5, w / 5]}
         position={[w / 4, -h * 0.9, 0]}
       />
+      <Item url="/8.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
+      <Item url="/7.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
       <Item
-        url="/vite.svg"
-        scale={[w / 3, w / 3, 1]}
-        position={[-w / 6, 0, 0]}
-      />
-      <Item url="/vite.svg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
-      <Item
-        url="/vite.svg"
+        url="/6.jpg"
         scale={[w / 3, w / 5, 1]}
         position={[-w / 4, -h * 1, 0]}
       />
       <Item
-        url="/vite.svg"
+        url="/1.jpg"
         scale={[w / 5, w / 5, 1]}
         position={[w / 4, -h * 1.2, 0]}
       />
       <Item
-        url="/vite.svg"
+        url="/2.jpg"
         scale={[w / 5, w / 5, 1]}
         position={[w / 10, -h * 1.75, 0]}
       />
       <Item
-        url="/vite.svg"
+        url="/3.jpg"
         scale={[w / 3, w / 3, 1]}
         position={[-w / 4, -h * 2, 0]}
       />
       <Item
-        url="/vite.svg"
+        url="/4.jpg"
         scale={[w / 3, w / 5, 1]}
         position={[-w / 4, -h * 2.6, 0]}
       />
       <Item
-        url="/vite.svg"
-        scale={[w / 2, w / 2, 1]}
-        position={[w / 4, -h * 3.1, 0]}
+        url="/5.jpg"
+        scale={[w / 3, w / 3, 1]}
+        position={[w / 3.5, -h * 3.1, 0]}
       />
       <Item
-        url="/vite.svg"
+        url="/9.jpg"
         scale={[w / 2.5, w / 2, 1]}
-        position={[-w / 6, -h * 4.1, 0]}
+        position={[-w / 4, -h * 4.1, 0]}
       />
     </Scroll>
   );
@@ -122,7 +118,7 @@ function App() {
               right: "20vw",
               fontSize: "25em",
               transform: `translate3d(0,-100%,0)`,
-              color: "red",
+              color: "white",
             }}
           >
             all
@@ -134,12 +130,12 @@ function App() {
             thee,
           </h1>
           <h1 style={{ position: "absolute", top: "350vh", left: "10vw" }}>
-            thoth
+            hermes
           </h1>
-          <h1 style={{ position: "absolute", top: "450vh", right: "10vw" }}>
-            her
+          <h1 style={{ position: "absolute", top: "450vh", right: "5vw" }}>
+            tris
             <br />
-            mes.
+            megistus.
           </h1>
         </Scroll>
       </ScrollControls>
