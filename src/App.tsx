@@ -56,7 +56,7 @@ function Items() {
     <Scroll>
       <AnimatedModel
         scale={[w / 5, w / 5, w / 5]}
-        position={[w / 4, -h * 0.9, 0]}
+        position={[w / 4, -h * 0.9, 1]}
       />
       <Item url="/8.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
       <Item url="/7.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
@@ -101,12 +101,8 @@ function Items() {
 
 function App() {
   return (
-    <Canvas
-      orthographic
-      camera={{ zoom: 80 }}
-      gl={{ alpha: false, antialias: false, stencil: false, depth: false }}
-      dpr={[1, 1.5]}
-    >
+    <Canvas orthographic camera={{ zoom: 80 }} dpr={[1, 1.5]}>
+      <ambientLight />
       <color attach="background" args={["#f0f0f0"]} />
       <ScrollControls damping={6} pages={5}>
         <Items />
