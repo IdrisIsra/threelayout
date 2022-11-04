@@ -43,10 +43,6 @@ interface GLTFAction extends THREE.AnimationClip {
   name: ActionName;
 }
 
-type TScrollModel = {
-  top: React.RefObject<number>;
-};
-
 export function AnimatedModel(props: any) {
   const data = useScroll();
 

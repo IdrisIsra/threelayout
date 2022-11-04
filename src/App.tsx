@@ -1,21 +1,37 @@
 import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useIntersect, Image, ScrollControls, Scroll } from "@react-three/drei";
+import {
+  useIntersect,
+  Image,
+  ScrollControls,
+  Scroll,
+  useScroll,
+} from "@react-three/drei";
 import { AnimatedModel } from "./AnimatedModel";
 
 function Box() {
   // This reference will give us direct access to the mesh
+  const data = useScroll();
   const mesh = useRef<THREE.Mesh>(null!);
   // Set up state for the hovered and active state
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  useFrame((state, delta) => {
+    console.log(data.offset);
+    mesh.current.rotation.x += 0.01;
+    if (data.offset < 0.57) {
+      mesh.current.position.y = (1 - data.offset * 1.75) * -100;
+    }
+    if (data.offset > 0.57) {
+      mesh.current.position.z = (data.offset - 0.57) * 10;
+    }
+  });
   // Return view, these are regular three.js elements expressed in JSX
   return (
     <mesh
-      position={[1.2, -1000, 1]}
+      position={[0, 1, -10]}
       ref={mesh}
       scale={active ? 1.5 : 1}
       onClick={(event) => setActive(!active)}
@@ -80,7 +96,7 @@ function Items() {
     <Scroll>
       <AnimatedModel
         scale={[w / 5, w / 5, w / 5]}
-        position={[w / 4, -h * 0.9, 1]}
+        position={[w / 4, -h * 0.9, -1]}
       />
       <Item url="/8.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
       <Item url="/7.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
@@ -125,19 +141,15 @@ function Items() {
 
 function App() {
   return (
-    <Canvas
-      orthographic
-      camera={{ zoom: 80 }}
-      gl={{ alpha: false, antialias: false, stencil: false }}
-      dpr={[1, 1.5]}
-    >
+    <Canvas gl={{ alpha: false, antialias: false, stencil: false }}>
       <ambientLight />
+      <pointLight position={[10, 10, 10]} />
       <color attach="background" args={["#f0f0f0"]} />
       <ScrollControls damping={6} pages={10}>
         <Items />
         <Box />
         {/* 
-// @ts-ignore annoying issue with Scroll not being able to take style prop */}
+// @ts-ignore annoying issue with Scroll not being able to take style prop when it actually can */}
         <Scroll html style={{ width: "100%" }}>
           <h1
             style={{
