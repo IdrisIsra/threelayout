@@ -46,7 +46,6 @@ interface GLTFAction extends THREE.AnimationClip {
 export function AnimatedModel(props: any) {
   const data = useScroll();
 
-  // const groupRef = useRef<THREE.Group>();
   const { nodes, materials, scene, animations } = useGLTF(
     "/animatedAvatarNew.glb"
   ) as unknown as GLTFResult;

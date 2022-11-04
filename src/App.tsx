@@ -7,6 +7,7 @@ import {
   ScrollControls,
   Scroll,
   useScroll,
+  OrbitControls,
 } from "@react-three/drei";
 import { AnimatedModel } from "./AnimatedModel";
 
@@ -31,9 +32,9 @@ function Box() {
   // Return view, these are regular three.js elements expressed in JSX
   return (
     <mesh
-      position={[0, 1, -10]}
+      position={[0, 1, 0]}
       ref={mesh}
-      scale={active ? 1.5 : 1}
+      scale={active ? 1.5 : 1.5}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => setHover(true)}
       onPointerOut={(event) => setHover(false)}
@@ -179,6 +180,7 @@ function App() {
           </h1>
         </Scroll>
       </ScrollControls>
+      <OrbitControls enableZoom={false} />
     </Canvas>
   );
 }
