@@ -101,7 +101,12 @@ function Items() {
 
 function App() {
   return (
-    <Canvas orthographic camera={{ zoom: 80 }} dpr={[1, 1.5]}>
+    <Canvas
+      orthographic
+      camera={{ zoom: 80 }}
+      gl={{ alpha: false, antialias: false, stencil: false }}
+      dpr={[1, 1.5]}
+    >
       <ambientLight />
       <color attach="background" args={["#f0f0f0"]} />
       <ScrollControls damping={6} pages={5}>

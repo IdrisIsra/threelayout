@@ -58,6 +58,10 @@ export function AnimatedModel(props: any) {
   const { ref, mixer, names, actions, clips } = useAnimations(animations);
   useEffect(() => {
     actions?.["Armature|mixamo.com|Layer0"]!.play();
+  }, []);
+
+  useFrame((state, delta) => {
+    mixer.setTime(data.offset * 10);
   });
 
   return (
