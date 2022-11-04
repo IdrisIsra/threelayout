@@ -4,6 +4,30 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useIntersect, Image, ScrollControls, Scroll } from "@react-three/drei";
 import { AnimatedModel } from "./AnimatedModel";
 
+function Box() {
+  // This reference will give us direct access to the mesh
+  const mesh = useRef<THREE.Mesh>(null!);
+  // Set up state for the hovered and active state
+  const [hovered, setHover] = useState(false);
+  const [active, setActive] = useState(false);
+  // Subscribe this component to the render-loop, rotate the mesh every frame
+  useFrame((state, delta) => (mesh.current.rotation.x += 0.01));
+  // Return view, these are regular three.js elements expressed in JSX
+  return (
+    <mesh
+      position={[1.2, -1000, 1]}
+      ref={mesh}
+      scale={active ? 1.5 : 1}
+      onClick={(event) => setActive(!active)}
+      onPointerOver={(event) => setHover(true)}
+      onPointerOut={(event) => setHover(false)}
+    >
+      <boxGeometry args={[1, 1, 1]} />
+      <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
+    </mesh>
+  );
+}
+
 function Item({
   url,
   scale,
@@ -15,7 +39,7 @@ function Item({
 }) {
   const visible = useRef(false);
   const [hovered, hover] = useState(false);
-  const ref = useIntersect((isVisible) => (visible.current = isVisible));
+  const ref = useIntersect((isVisible) => (visible.current = isVisible)) as any;
   const { height } = useThree((state) => state.viewport);
   useFrame((state, delta) => {
     ref.current.position.y = THREE.MathUtils.damp(
@@ -109,8 +133,11 @@ function App() {
     >
       <ambientLight />
       <color attach="background" args={["#f0f0f0"]} />
-      <ScrollControls damping={6} pages={5}>
+      <ScrollControls damping={6} pages={10}>
         <Items />
+        <Box />
+        {/* 
+// @ts-ignore annoying issue with Scroll not being able to take style prop */}
         <Scroll html style={{ width: "100%" }}>
           <h1
             style={{
