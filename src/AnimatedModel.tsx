@@ -57,6 +57,13 @@ export function AnimatedModel(props: any) {
 
   useFrame((state, delta) => {
     mixer.setTime(data.offset * 10);
+    if (data.offset < 0.57 && ref.current) {
+      console.log("box less than 0.6");
+      ref.current.position.y = (1 - data.offset * 1.735) * -100;
+    }
+    if (data.offset > 0.57 && ref.current) {
+      ref.current.position.z = (data.offset - 0.57) * 10;
+    }
   });
 
   return (

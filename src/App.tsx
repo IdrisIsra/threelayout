@@ -14,26 +14,27 @@ import { AnimatedModel } from "./AnimatedModel";
 function Box() {
   // This reference will give us direct access to the mesh
   const data = useScroll();
-  const mesh = useRef<THREE.Mesh>(null!);
+  const meshRef = useRef<THREE.Mesh>(null!);
   // Set up state for the hovered and active state
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
     console.log(data.offset);
-    mesh.current.rotation.x += 0.01;
+    meshRef.current.rotation.x += 0.01;
     if (data.offset < 0.57) {
-      mesh.current.position.y = (1 - data.offset * 1.75) * -100;
+      console.log("box less than 0.6");
+      meshRef.current.position.y = (1 - data.offset * 1.75) * -100;
     }
     if (data.offset > 0.57) {
-      mesh.current.position.z = (data.offset - 0.57) * 10;
+      meshRef.current.position.z = (data.offset - 0.57) * 10;
     }
   });
   // Return view, these are regular three.js elements expressed in JSX
   return (
     <mesh
-      position={[0, 1, 0]}
-      ref={mesh}
+      position={[3, 1, 0]}
+      ref={meshRef}
       scale={active ? 1.5 : 1.5}
       onClick={(event) => setActive(!active)}
       onPointerOver={(event) => setHover(true)}
@@ -95,10 +96,6 @@ function Items() {
   const { width: w, height: h } = useThree((state: any) => state.viewport);
   return (
     <Scroll>
-      <AnimatedModel
-        scale={[w / 5, w / 5, w / 5]}
-        position={[w / 4, -h * 0.9, -1]}
-      />
       <Item url="/8.jpg" scale={[w / 3, w / 3, 1]} position={[-w / 6, 0, 0]} />
       <Item url="/7.jpg" scale={[2, w / 3, 1]} position={[w / 30, -h, 0]} />
       <Item
@@ -149,6 +146,7 @@ function App() {
       <ScrollControls damping={6} pages={10}>
         <Items />
         <Box />
+        <AnimatedModel />
         {/* 
 // @ts-ignore annoying issue with Scroll not being able to take style prop when it actually can */}
         <Scroll html style={{ width: "100%" }}>
