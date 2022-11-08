@@ -140,8 +140,8 @@ function Items() {
 function App() {
   return (
     <Canvas gl={{ alpha: false, antialias: false, stencil: false }}>
-      {/* <ambientLight />
-      <pointLight position={[10, 10, 10]} /> */}
+      <ambientLight />
+      <pointLight position={[10, 10, 10]} />
       <color attach="background" args={["#f0f0f0"]} />
       <ScrollControls damping={6} pages={10}>
         <Items />
