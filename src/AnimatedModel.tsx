@@ -51,20 +51,20 @@ export function AnimatedModel(props: any) {
   ) as unknown as GLTFResult;
 
   const { ref, mixer, names, actions, clips } = useAnimations(animations);
-  useEffect(() => {
-    actions?.["Armature|mixamo.com|Layer0"]!.play();
-  }, []);
+  // useEffect(() => {
+  //   actions?.["Armature|mixamo.com|Layer0"]!.play();
+  // }, []);
 
-  useFrame((state, delta) => {
-    mixer.setTime(data.offset * 10);
-    if (data.offset < 0.57 && ref.current) {
-      console.log("box less than 0.6");
-      ref.current.position.y = (1 - data.offset * 1.735) * -100;
-    }
-    if (data.offset > 0.57 && ref.current) {
-      ref.current.position.z = (data.offset - 0.57) * 10;
-    }
-  });
+  // useFrame((state, delta) => {
+  //   mixer.setTime(data.offset * 10);
+  //   if (data.offset < 0.57 && ref.current) {
+  //     console.log("box less than 0.6");
+  //     ref.current.position.y = (1 - data.offset * 1.735) * -100;
+  //   }
+  //   if (data.offset > 0.57 && ref.current) {
+  //     ref.current.position.z = (data.offset - 0.57) * 10;
+  //   }
+  // });
 
   return (
     <group ref={ref} {...props} dispose={null}>
