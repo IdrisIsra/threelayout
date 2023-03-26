@@ -7,6 +7,7 @@ import React, { useEffect, useRef } from "react";
 import { useGLTF, useAnimations, useScroll } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { useFrame } from "@react-three/fiber";
+import { MathUtils } from "three";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -58,8 +59,7 @@ export function AnimatedModel(props: any) {
   useFrame((state, delta) => {
     mixer.setTime(data.offset * 10);
     if (data.offset < 0.57 && ref.current) {
-      console.log("box less than 0.6");
-      ref.current.position.y = (1 - data.offset * 1.735) * -100;
+      ref.current.position.y = MathUtils.lerp(-100, 0, data.offset * 1.735);
     }
     if (data.offset > 0.57 && ref.current) {
       ref.current.position.z = (data.offset - 0.57) * 10;

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   useIntersect,
@@ -8,6 +8,7 @@ import {
   Scroll,
   useScroll,
   OrbitControls,
+  Preload,
 } from "@react-three/drei";
 import { AnimatedModel } from "./AnimatedModel";
 
@@ -20,10 +21,8 @@ function Box() {
   const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
-    console.log(data.offset);
     meshRef.current.rotation.x += 0.01;
     if (data.offset < 0.57) {
-      console.log("box less than 0.6");
       meshRef.current.position.y = (1 - data.offset * 1.75) * -100;
     }
     if (data.offset > 0.57) {
@@ -87,6 +86,9 @@ function Item({
         onPointerOut={() => hover(false)}
         scale={scale}
         url={url}
+        matrixWorldAutoUpdate
+        getObjectsByProperty
+        getVertexPosition
       />
     </group>
   );
@@ -143,12 +145,13 @@ function App() {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       <color attach="background" args={["#f0f0f0"]} />
-      <ScrollControls damping={6} pages={10}>
+      <ScrollControls damping={1} pages={10}>
         <Items />
         <Box />
         <AnimatedModel />
+        <Preload all />
         {/* 
-// @ts-ignore annoying issue with Scroll not being able to take style prop when it actually can */}
+@ts-ignore annoying issue with Scroll not being able to take style prop when it actually can */}
         <Scroll html style={{ width: "100%" }}>
           <h1
             style={{
